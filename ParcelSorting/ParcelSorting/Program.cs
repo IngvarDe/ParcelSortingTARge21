@@ -35,7 +35,7 @@ namespace ParcelSorting
                     {
                         Console.WriteLine("Sorting line width is {0} and it fits", sortingLine.LineWidth);
                     }
-
+                    // siia mõelda välja uusi valideerimisi
                     //if (sortingLine.LineWidth >= prop && prop <= prop)
                 }
             }
