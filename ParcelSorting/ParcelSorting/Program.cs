@@ -8,6 +8,8 @@ namespace ParcelSorting
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            ParcelLineFitController(BoxSizes);
         }
 
         public static bool ParcelLineFitController(List<BoxSize> boxSizes)
@@ -19,22 +21,55 @@ namespace ParcelSorting
                 Console.WriteLine("New sorting line starts");
 
                 var boxLengthInHalf = box.Length / 2;
-                var halfBoxDiagonalNotSqrt = (boxLengthInHalf * boxLengthInHalf) +
-                    (box.Width * box.Width);
+                var halfBoxDiagonalNotSqrt = (boxLengthInHalf * boxLengthInHalf) + (box.Width * box.Width);
                 var halfParcelDiagonal = Math.Sqrt(halfBoxDiagonalNotSqrt);
+                var lineWidth = 0;
 
                 foreach (SortingLineParam sortingLine in box.SortingLineParams)
                 {
-                    float lineWidth = 0;
 
                     var sortingLineNotSqrt = (sortingLine.LineWidth * sortingLine.LineWidth)
                         + (lineWidth * lineWidth);
                     var cornerDiagonal = Math.Sqrt(sortingLineNotSqrt);
 
+                    //1
                     if (sortingLine.LineWidth >= halfParcelDiagonal)
                     {
                         Console.WriteLine("Sorting line width is {0} and it fits", sortingLine.LineWidth);
                     }
+                    //2
+                    else if (sortingLine.LineWidth <= halfParcelDiagonal && lineWidth >= halfParcelDiagonal)
+                    {
+                        Console.WriteLine("Sorting line width is {0} and it fits", sortingLine.LineWidth);
+                    }
+                    //3
+                    else if (box.Width <= halfParcelDiagonal && lineWidth >= halfParcelDiagonal)
+                    {
+                        Console.WriteLine("Sorting line width is {0} and it fits", sortingLine.LineWidth);
+                    }
+                    //4
+                    else if (box.Width >= cornerDiagonal)
+                    {
+                        Console.WriteLine("Sorting line width is {0} and it fits", sortingLine.LineWidth);
+                    }
+                    //5
+                    else if (sortingLine.LineWidth <= halfParcelDiagonal && sortingLine.LineWidth >= cornerDiagonal)
+                    {
+                        parcelFits = sortingLine.LineWidth <= halfParcelDiagonal &&
+                            sortingLine.LineWidth >= cornerDiagonal;
+
+                        var result = parcelFits 
+                            ? "Sorting line width is " + sortingLine.LineWidth + " and it fits" :
+                            "It dosent fit to the sorting line and needs to be wider";
+                        
+                        Console.WriteLine(result);
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("It dosent fit to the sorting line and needs to be wider");
+                    }
+                    lineWidth = sortingLine.LineWidth;
                     // siia mõelda välja uusi valideerimisi
                     //if (sortingLine.LineWidth >= prop && prop <= prop)
                 }
